@@ -324,7 +324,7 @@ QNetworkReply* QWebdav::createRequest(const QString& method, QNetworkRequest& re
     }
 #endif
 
-    return sendCustomRequest(req, method.toAscii(), outgoingData);
+    return sendCustomRequest(req, method.toUtf8(), outgoingData);
 }
 
 QNetworkReply* QWebdav::createRequest(const QString& method, QNetworkRequest& req, const QByteArray& outgoingData )
