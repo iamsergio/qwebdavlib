@@ -184,9 +184,7 @@ void QWebdav::replyFinished(QNetworkReply* reply)
     QIODevice* dataIO = m_inDataDevices.value(reply, 0);
     if (dataIO != 0) {
         dataIO->write(reply->readAll());
-        static_cast<QFile*>(dataIO)->flush();
         dataIO->close();
-        delete dataIO;
     }
     m_inDataDevices.remove(reply);
 
