@@ -90,9 +90,11 @@ public:
                             const QString &sslCertDigestMd5 = "",
                             const QString &sslCertDigestSha1 = "" );
 
+#ifndef QT_NO_OPENSSL
     //! set SSL certificate digests after emitted checkSslCertifcate() signal
     void acceptSslCertificate(const QString &sslCertDigestMd5 = "",
                               const QString &sslCertDigestSha1 = "");
+#endif
 
     QNetworkReply* list(const QString& path);
     QNetworkReply* list(const QString& path, int depth);
@@ -125,8 +127,10 @@ public:
     static QByteArray hexToDigest(const QString &input);
 
 signals:
+#ifndef QT_NO_OPENSSL
     //! signal is emitted when an SSL error occured, the SSL certificates have to be checked
     void checkSslCertifcate(const QList<QSslError> &errors);
+#endif
     void errorChanged(QString error);
 
 protected slots:
@@ -135,7 +139,9 @@ protected slots:
     void replyDeleteLater(QNetworkReply*);
     void replyError(QNetworkReply::NetworkError);
     void provideAuthenication(QNetworkReply* reply, QAuthenticator* authenticator);
+#ifndef QT_NO_OPENSSL
     void sslErrors(QNetworkReply *reply,const QList<QSslError> &errors);
+#endif
 
 protected:
     QNetworkReply* createRequest(const QString& method, QNetworkRequest& req, QIODevice* outgoingData = 0 );

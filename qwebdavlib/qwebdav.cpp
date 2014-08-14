@@ -153,12 +153,14 @@ void QWebdav::setConnectionSettings(const QWebdavConnectionType connectionType,
     m_password = password;
 }
 
+#ifndef QT_NO_OPENSSL
 void QWebdav::acceptSslCertificate(const QString &sslCertDigestMd5,
                                    const QString &sslCertDigestSha1)
 {
     m_sslCertDigestMd5 = hexToDigest(sslCertDigestMd5);
     m_sslCertDigestSha1 = hexToDigest(sslCertDigestSha1);
 }
+#endif
 
 void QWebdav::replyReadyRead()
 {
@@ -249,6 +251,7 @@ void QWebdav::provideAuthenication(QNetworkReply *reply, QAuthenticator *authent
     authenticator->setPassword(m_password);
 }
 
+#ifndef QT_NO_OPENSSL
 void QWebdav::sslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
 {
 #ifdef DEBUG_WEBDAV
@@ -268,6 +271,7 @@ void QWebdav::sslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
         reply->abort();
     }
 }
+#endif
 
 QString QWebdav::digestToHex(const QByteArray &input)
 {
